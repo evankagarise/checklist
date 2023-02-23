@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
-import { writeable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-const date = browser ? JSON.parse(window.localStorage.getItem('st-todo-list')) ?? [] : [];
+const data = browser ? JSON.parse(window.localStorage.getItem('st-todo-list')) ?? [] : [];
 
-export const todos = writeable(data);
+export const todos = writable(data);
 
 todos.subscribe((value) => {
-    if (browser) {
-        localStorage.setItem('st-todo-list', JSON.stringify(value));
-    }
+	if (browser) {
+		localStorage.setItem('st-todo-list', JSON.stringify(value));
+	}
 });
 
 export const addTodo = () => {
@@ -34,6 +34,7 @@ export const toggleComplete = (id) => {
 		});
 	});
 };
+
 export const editTodo = (id, text) => {
 	todos.update((currentTodos) => {
 		return currentTodos.map((todo) => {
